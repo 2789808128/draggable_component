@@ -74,6 +74,7 @@ import { useMockData } from "../hooks/useMockData";
 import LeftMenu from "./LeftMenu.vue";
 import FlowNode from "./FlowNode.vue";
 import NodeConfig from "./NodeConfig.vue";
+import TimeRangePicker from "./TimeRangePicker.vue";
 
 const state = reactive({
   visible: false,
@@ -145,7 +146,8 @@ function configSuccess(type: string, data: any) {
   }
 }
 
-function showData() {
+function 
+showData() {
   state.visible = true;
   nextTick(() => {
     state.flowJsonData = JSON.stringify(unref(data), null, 4).toString();
@@ -192,7 +194,7 @@ loadData(dataA as any);
     display: flex;
     height: calc(100% - 47px);
     .left-sider {
-      width: 230px;
+      width: 330px;
       border-right: 1px solid #eee;
     }
     .content {
