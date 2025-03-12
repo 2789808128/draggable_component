@@ -26,11 +26,13 @@
           >流程信息</lay-button
         >
       </div>
+      
     </div>
     <div class="flow-panel__layout">
       <div class="left-sider">
         <LeftMenu @addNode="addNode" />
       </div>
+
       <div id="container" class="content" ref="refContainer" v-flow-drag>
         <template v-for="node in data.nodeList" :key="node.id">
           <FlowNode
@@ -43,8 +45,19 @@
           </FlowNode>
         </template>
         <!-- 给画布一个默认的宽度和高度 -->
-        <div style="position: absolute; top: 2000px; left: 2000px">&nbsp;</div>
+        <div style="position: absolute; top: 2000px; left: 2000px">&nbsp;
+        </div>
+        <div class="time-range-container">  
+            <TimeRangePicker v-model:start="startTime" v-model:end="endTime"/>
+        </div>
       </div>
+
+      <!-- <div class="foot-button">
+        <button class="retreat">取消</button>
+        <button class="save">保存</button>
+        <button class="publish">发布</button>
+      </div>   -->
+
       <div class="right-sider">
         <NodeConfig ref="refNodeForm" @success="configSuccess" />
       </div>
@@ -66,7 +79,7 @@
   </lay-layer>
 </template>
 <script setup lang="ts">
-import { unref, reactive, nextTick } from "vue";
+import { unref, reactive, nextTick,ref } from "vue";
 import { Codemirror } from "vue-codemirror";
 import { useRender } from "../hooks/useRender";
 import { useMockData } from "../hooks/useMockData";
@@ -76,6 +89,9 @@ import FlowNode from "./FlowNode.vue";
 import NodeConfig from "./NodeConfig.vue";
 import TimeRangePicker from "./TimeRangePicker.vue";
 
+
+const startTime = ref('2021-12-03 00:00:00');
+const endTime = ref('2021-12-04 00:00:00');
 const state = reactive({
   visible: false,
   flowJsonData: "",
@@ -146,8 +162,7 @@ function configSuccess(type: string, data: any) {
   }
 }
 
-function 
-showData() {
+function showData() {
   state.visible = true;
   nextTick(() => {
     state.flowJsonData = JSON.stringify(unref(data), null, 4).toString();
@@ -194,14 +209,52 @@ loadData(dataA as any);
     display: flex;
     height: calc(100% - 47px);
     .left-sider {
-      width: 330px;
+      width: 230px;
       border-right: 1px solid #eee;
     }
+  
     .content {
       position: relative;
       overflow: scroll;
       flex: 1;
-    }
+      background-image: url(../assets/back-img.png);
+      background-repeat: repeat;
+      
+  // // 新增外层容器穿透样式
+  // :deep(> div[style*="absolute"]) { // 选择包含绝对定位的父容器
+  //   position: absolute;
+  //   top: 0 !important;  // 覆盖原2000px
+  //   left: 0 !important; // 覆盖原2000px
+  //   width: 100%;
+  //   height: 0; // 避免影响布局
+  //   display: flex;
+  //   justify-content: center;
+  // }
+
+  // 时间选择器容器调整
+  :deep(.time-range-container) {
+    position: relative; // 改为相对定位
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 8px;
+  }
+      :deep(.time-range-container) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 8px;
+  }
+
+
     .right-sider {
       width: 300px;
       border-left: 1px solid #eee;
@@ -226,4 +279,6 @@ loadData(dataA as any);
   :deep(.emptyFlowLabel) {
   }
 }
+}
+
 </style>

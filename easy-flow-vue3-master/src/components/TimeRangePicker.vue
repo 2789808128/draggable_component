@@ -1,5 +1,6 @@
 <template>
     <div class="time-range-picker">
+      <span class="hint">选择时间范围:</span>
       <el-date-picker
         v-model="startTime"
         type="datetime"
@@ -46,8 +47,27 @@
       : false;
   };
   </script>
-  
   <style scoped>
+  /* 在原有样式基础上添加 */
+  .time-range-picker {
+    white-space: nowrap; /* 禁止换行 */
+    min-width: max-content; /* 根据内容自动扩展最小宽度 */
+  }
+  
+  .hint {
+    white-space: nowrap; /* 确保提示文字不换行 */
+    flex-shrink: 0; /* 禁止收缩 */
+  }
+  
+  /* 调整日期选择器宽度 */
+  :deep(.el-date-editor) {
+    width: 200px !important; /* 适当缩小宽度 */
+    flex-shrink: 0; /* 禁止收缩 */
+  }
+  
+  .separator {
+    flex-shrink: 0; /* 禁止收缩 */
+  }
   .time-range-picker {
     display: flex;
     align-items: center;
@@ -58,12 +78,35 @@
     color: #606266;
     padding: 0 8px;
   }
+  .hint {
+    color: #606266;
+    padding: 0 8px;}
   
   /* 调整Element组件默认宽度 */
   :deep(.el-date-editor) {
     width: 240px;
   }
   </style>
+  <!-- <style scoped>
+  .time-range-picker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .separator {
+    color: #606266;
+    padding: 0 8px;
+  }
+  .hint {
+    color: #606266;
+    padding: 0 8px;}
+  
+  /* 调整Element组件默认宽度 */
+  :deep(.el-date-editor) {
+    width: 240px;
+  }
+  </style> -->
 
 
 <!-- <template>
