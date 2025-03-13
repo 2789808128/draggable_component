@@ -175,16 +175,7 @@ loadData(dataA as any);
 .flow-panel {
   height: 100vh;
   font-size: 14px;
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background: #e0e3e7;
-    height: 20px;
-  }
+ 
   .header {
     padding-left: 10px;
     box-sizing: border-box;
@@ -208,9 +199,28 @@ loadData(dataA as any);
   &__layout {
     display: flex;
     height: calc(100% - 47px);
-    .left-sider {
-      width: 230px;
-      border-right: 1px solid #eee;
+    .left-sider[data-v-e1cdb660] {
+      position: relative;
+      // 添加高度限制
+      min-height: 300px; // 最小高度保证
+  
+      :deep(.lay-collapse) {
+        // 绝对定位填满容器
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 4px; // 滚动条占位
+        overflow-y: auto !important;
+        
+        // 修复折叠项内容高度
+        .lay-collapse-item {
+          &__content {
+            height: auto !important;
+            min-height: 40px; // 内容最小高度
+          }
+        }
+      }
     }
   
     .content {
