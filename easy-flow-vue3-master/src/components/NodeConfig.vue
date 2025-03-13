@@ -24,7 +24,7 @@
           <input 
             type="text" 
             class="form-input"
-            v-model="node.name"
+            v-model="node.name1"
             placeholder="内容"
           >
         </div>
@@ -35,7 +35,7 @@
           <input 
             type="text" 
             class="form-input"
-            v-model="node.type"
+            v-model="node.type1"
             placeholder="内容"
           >
         </div>
@@ -403,8 +403,8 @@ const emits = defineEmits(["success"]);
 const state = reactive({
   type: "node",
   node: {
-    name: '',    // 新增
-    type: '',    // 新增
+    name1: '',    // 新增
+    type1: '',    // 新增
     description: '',  // 新增
     
   },

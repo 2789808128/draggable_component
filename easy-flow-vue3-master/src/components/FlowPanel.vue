@@ -32,35 +32,64 @@
       <div class="left-sider">
         <LeftMenu @addNode="addNode" />
       </div>
-
-      <div id="container" class="content" ref="refContainer" v-flow-drag>
-        <template v-for="node in data.nodeList" :key="node.id">
-          <FlowNode
-            :id="node.id"
-            :node="node"
-            :activeElement="activeNode"
-            @clickNode="clickNode"
-            @changeNode="changeNode"
-          >
-          </FlowNode>
-        </template>
-        <!-- 给画布一个默认的宽度和高度 -->
-        <div style="position: absolute; top: 2000px; left: 2000px">&nbsp;
-        </div>
-        <div class="time-range-container">  
+      <div class="content-wrapper">
+        <div id="container" class="content" ref="refContainer" v-flow-drag>
+          <template v-for="node in data.nodeList" :key="node.id">
+            <FlowNode
+              :id="node.id"
+              :node="node"
+              :activeElement="activeNode"
+              @clickNode="clickNode"
+              @changeNode="changeNode"
+            >
+            </FlowNode>
+          </template>
+          <!-- 给画布一个默认的宽度和高度 -->
+          <div style="position: absolute; top: 2000px; left: 2000px">&nbsp;
+          </div>
+          <div class="time-range-container">  
             <TimeRangePicker v-model:start="startTime" v-model:end="endTime"/>
-        </div>
+          </div>
       </div>
-
-      <!-- <div class="foot-button">
+      <!-- 固定定位按钮 -->
+  <button 
+    class="custom-floating-btn"
+    style="
+      position: fixed;
+      width: 110px;
+      height: 32px;
+      top: 104px; /* 时间选择器高度 + 间距 */
+      right: 380px;
+      border-radius: 2px;
+      padding: 5px 16px;
+      background: #00B42A;
+      box-shadow: 0px 2px 5px #DBDBDB;
+      font: 14px/22px 'Microsoft YaHei';
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-color: #00B42A;
+      color:#ffffff;
+    ">
+    <!-- 图标 -->
+    <span style="
+      width: 3.5px;
+      height: 4.67px;
+      border: 1.18px solid #FFF;
+      background: #FFF;
+    "></span>
+    全局运行
+  </button>
+  </div>
+      <div class="foot-button">
         <button class="retreat">取消</button>
         <button class="save">保存</button>
         <button class="publish">发布</button>
-      </div>   -->
-
+      </div> 
       <div class="right-sider">
         <NodeConfig ref="refNodeForm" @success="configSuccess" />
       </div>
+      
     </div>
   </div>
   <lay-layer
@@ -222,24 +251,19 @@ loadData(dataA as any);
         }
       }
     }
-  
+/* 新增/修改的样式 */
+.content-wrapper {
+  flex: 1;
+  position: relative;
+}
     .content {
       position: relative;
-      overflow: scroll;
+      overflow: auto;
+      height: calc(100% - 60px); /* 为按钮预留空间 */
       flex: 1;
       background-image: url(../assets/back-img.png);
       background-repeat: repeat;
       
-  // // 新增外层容器穿透样式
-  // :deep(> div[style*="absolute"]) { // 选择包含绝对定位的父容器
-  //   position: absolute;
-  //   top: 0 !important;  // 覆盖原2000px
-  //   left: 0 !important; // 覆盖原2000px
-  //   width: 100%;
-  //   height: 0; // 避免影响布局
-  //   display: flex;
-  //   justify-content: center;
-  // }
 
   // 时间选择器容器调整
   :deep(.time-range-container) {
@@ -263,14 +287,63 @@ loadData(dataA as any);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-top: 8px;
   }
+    
+  }
+  .foot-button {
+  position: absolute;
+  bottom: -14px; /* 将按钮推到容器外 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.foot-button button {
+    min-width: 100px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
 
+.foot-button .retreat {
+  background-color: #F2F3F5;
+  color: #5C5C5C;
+}
 
-    .right-sider {
+.foot-button .save {
+  background-color: white;
+  color: #165DFF;
+  border: 1px solid #165DFF;
+}
+
+.foot-button .publish {
+  background-color: #165DFF;
+  color: white;
+}
+
+/* 悬停效果 */
+.foot-button button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* 禁用状态（如果需要） */
+.foot-button button:disabled {
+  background-color: #f5f5f5;
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}
+  .right-sider {
       width: 300px;
       border-left: 1px solid #eee;
       background-color: #fbfbfb;
     }
-  }
   :deep(.jtk-overlay) {
     cursor: pointer;
     color: #4a4a4a;

@@ -1,7 +1,7 @@
 <template>
   <div ref="nodeRef" :style="nodeContainerStyle" :class="nodeContainerClass" @click="clickNode" @mouseup="changeNode">
     <!-- 最左侧的那条竖线 -->
-    <div class="node-left"></div>
+    <!-- <div class="node-left"></div> -->
     <!-- 节点类型的图标 -->
     <lay-icon :type="node.ico" :class="nodeIcoClass"></lay-icon>
     <!-- 节点名称 -->

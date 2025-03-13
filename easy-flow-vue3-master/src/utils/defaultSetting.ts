@@ -58,7 +58,8 @@ export const jsplumbSetting = {
    */
   PaintStyle: {
     // 线的颜色
-    stroke: "#E0E3E7",
+    // stroke: "#E0E3E7",原有线的颜色，已经修改为#86909C
+     stroke: "#86909C",
     // 线的粗细，值越大线越粗
     strokeWidth: 1,
     // 设置外边线的颜色，默认设置透明，这样别人就看不见了，点击线的时候可以不用精确点击，参考 https://blog.csdn.net/roymno2/article/details/72717101
@@ -184,7 +185,7 @@ export const menuList = [
     children: [
       {
         id: "11",
-        type: "task",
+        type: "input",
         name: "输入",
         ico: "layui-icon-survey",
         // 自定义覆盖样式
@@ -192,7 +193,7 @@ export const menuList = [
       },
       {
         id: "12",
-        type: "task",
+        type: "output",
         name: "输出",
         ico: "layui-icon-survey",
         // 自定义覆盖样式
@@ -207,7 +208,7 @@ export const menuList = [
     children: [
       {
         id: "21",
-        type: "task",
+        type: "formula",
         name: "计算公式(+-*/)",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -222,7 +223,7 @@ export const menuList = [
     children: [
       {
         id: "31",
-        type: "task",
+        type: "decimal-places",
         name: "小数位数",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -230,7 +231,7 @@ export const menuList = [
       },
       {
         id: "32",
-        type: "task",
+        type: "single-column-movement",
         name: "单列移动",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -238,7 +239,7 @@ export const menuList = [
       },
       {
         id: "33",
-        type: "task",
+        type: "filter",
         name: "滤波器",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -246,7 +247,7 @@ export const menuList = [
       },
       {
         id: "34",
-        type: "task",
+        type: "column-connection",
         name: "列连接",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -254,7 +255,7 @@ export const menuList = [
       },
       {
         id: "35",
-        type: "task",
+        type: "data-disruption",
         name: "数据打乱",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -262,7 +263,7 @@ export const menuList = [
       },
       {
         id: "36",
-        type: "task",
+        type: "data-normalization",
         name: "数据规整",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -277,7 +278,7 @@ export const menuList = [
     children: [
       {
         id: "41",
-        type: "task",
+        type: "relevance",
         name: "相关性",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -285,7 +286,7 @@ export const menuList = [
       },
       {
         id: "42",
-        type: "task",
+        type: "autocorrelation",
         name: "自相关性",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -300,7 +301,7 @@ export const menuList = [
     children: [
       {
         id: "51",
-        type: "task",
+        type: "time-characteristics",
         name: "时间特征",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -315,7 +316,7 @@ export const menuList = [
     children: [
       {
         id: "61",
-        type: "task",
+        type: "xgboost",
         name: "xgboost",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -323,7 +324,7 @@ export const menuList = [
       },
       {
         id: "62",
-        type: "task",
+        type: "arima",
         name: "ARIMA",
         ico: "layui-icon-success",
         // 自定义覆盖样式
@@ -332,7 +333,7 @@ export const menuList = [
     ],
   },
 ];
-
+//原有四种运行状态
 export const stateOptions = [
   {
     label: "成功",

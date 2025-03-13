@@ -247,6 +247,7 @@ export const useRender = (id: string = "container") => {
     // 居中
     left -= 85;
     top -= 16;
+    //随机数字符串化
     var nodeId = getUUID();
     // 动态生成名字
     var origName = nodeMenu.name;

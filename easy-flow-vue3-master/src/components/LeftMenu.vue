@@ -1,4 +1,3 @@
-
 <template>
   <lay-collapse class="left-menu" v-model="openKeys">
     <lay-collapse-item :id="menu.id" :title="menu.name" v-for="menu in menuList">
