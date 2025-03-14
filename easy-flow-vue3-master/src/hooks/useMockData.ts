@@ -10,6 +10,9 @@ export const useMockData = () => {
         top: "161px",
         ico: "layui-icon-heart",
         state: "success",
+        SORN: "N",
+        outcome: 1,
+        income: 0,
       },
       {
         id: "nodeB",
@@ -19,6 +22,9 @@ export const useMockData = () => {
         top: "161px",
         ico: "layui-icon-light",
         state: "success",
+        SORN: "N",
+        outcome: 1,
+        income: 1,
       },
       {
         id: "nodeC",
@@ -28,6 +34,9 @@ export const useMockData = () => {
         top: "161px",
         ico: "layui-icon-time",
         state: "success",
+        SORN: "N",
+        outcome: 1,
+        income: 0,
       },
     ],
     lineList: [

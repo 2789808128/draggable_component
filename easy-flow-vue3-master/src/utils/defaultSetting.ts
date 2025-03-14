@@ -188,7 +188,9 @@ export const menuList = [
         type: "input",
         name: "输入",
         ico: "layui-icon-survey",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
       {
@@ -196,7 +198,9 @@ export const menuList = [
         type: "output",
         name: "输出",
         ico: "layui-icon-survey",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
     ],
@@ -211,7 +215,11 @@ export const menuList = [
         type: "formula",
         name: "计算公式(+-*/)",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 2, // 最大出线数量
+        minOutcome: 1, // 最小出线数量
         style: {},
       },
     ],
@@ -226,7 +234,9 @@ export const menuList = [
         type: "decimal-places",
         name: "小数位数",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
       {
@@ -234,7 +244,9 @@ export const menuList = [
         type: "single-column-movement",
         name: "单列移动",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
       {
@@ -242,7 +254,11 @@ export const menuList = [
         type: "filter",
         name: "滤波器",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 1, // 最大出线数量
+        minOutcome: 1, // 最小出线数量
         style: {},
       },
       {
@@ -250,7 +266,9 @@ export const menuList = [
         type: "column-connection",
         name: "列连接",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
       {
@@ -258,7 +276,9 @@ export const menuList = [
         type: "data-disruption",
         name: "数据打乱",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
       {
@@ -266,7 +286,9 @@ export const menuList = [
         type: "data-normalization",
         name: "数据规整",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
     ],
@@ -281,7 +303,11 @@ export const menuList = [
         type: "relevance",
         name: "相关性",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 2, // 最大出线数量
+        minOutcome: 2, // 最小出线数量
         style: {},
       },
       {
@@ -289,7 +315,11 @@ export const menuList = [
         type: "autocorrelation",
         name: "自相关性",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 2, // 最大出线数量
+        minOutcome: 2, // 最小出线数量
         style: {},
       },
     ],
@@ -304,7 +334,9 @@ export const menuList = [
         type: "time-characteristics",
         name: "时间特征",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "N", // NormalNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
         style: {},
       },
     ],
@@ -319,7 +351,11 @@ export const menuList = [
         type: "xgboost",
         name: "xgboost",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 1, // 最大出线数量
+        minOutcome: 1, // 最小出线数量
         style: {},
       },
       {
@@ -327,7 +363,11 @@ export const menuList = [
         type: "arima",
         name: "ARIMA",
         ico: "layui-icon-success",
-        // 自定义覆盖样式
+        SORN: "S", // SpecialNode
+        outcome: 0, // 初始化出线数量
+        income: 0, // 初始化入线数量
+        maxOutcome: 1, // 最大出线数量
+        minOutcome: 1, // 最小出线数量
         style: {},
       },
     ],

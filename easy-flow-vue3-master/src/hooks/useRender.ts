@@ -19,6 +19,12 @@ interface node {
   ico: string;
   state: string;
   viewOnly?: boolean;
+  //新增判断逻辑
+  SORN: 'S' | 'N'; // 'S' 表示 SpecialNode，'N' 表示 NormalNode
+  outcome: number; // 出线数量
+  income: number; // 入线数量
+  maxOutcome?: number; // 最大出线数量（仅 SpecialNode 有）
+  minOutcome?: number; // 最小出线数量（仅 SpecialNode 有）
 }
 
 interface line {
@@ -144,6 +150,22 @@ export const useRender = (id: string = "container") => {
           console.log("进行连线connection");
           let from = evt.source.id;
           let to = evt.target.id;
+           // 更新源节点的 outcome 属性
+        const sourceNode = state.data.nodeList.find(
+          (node: node) => node.id === from
+        );
+        if (sourceNode) {
+          sourceNode.outcome += 1;
+        }
+
+        // 更新目标节点的 income 属性
+        const targetNode = state.data.nodeList.find(
+          (node: node) => node.id === to
+        );
+        if (targetNode) {
+          targetNode.income += 1;
+        }
+
           if (state.loadFinish) {
             state.data.lineList.push({ from: from, to: to });
           }
@@ -155,6 +177,21 @@ export const useRender = (id: string = "container") => {
         "connectionDetached",
         (evt: { sourceId: any; targetId: any }) => {
           deleteLine(evt.sourceId, evt.targetId);
+           // 更新源节点的 outcome 属性
+        const sourceNode = state.data.nodeList.find(
+          (node: node) => node.id === evt.sourceId
+        );
+        if (sourceNode) {
+          sourceNode.outcome -= 1;
+        }
+
+        // 更新目标节点的 income 属性
+        const targetNode = state.data.nodeList.find(
+          (node: node) => node.id === evt.targetId
+        );
+        if (targetNode) {
+          targetNode.income -= 1;
+        }
         }
       );
 
@@ -189,6 +226,29 @@ export const useRender = (id: string = "container") => {
             layer.msg("不支持两个节点之间连线回环", { icon: 2 });
             return false;
           }
+      
+         // 检查 nodeList 是否为空
+        if (state.data.nodeList.length === 0) {
+          layer.msg("节点列表为空", { icon: 2 });
+          return false;
+        }
+
+          // 检查 SpecialNode 的出线数量
+          const sourceNode = state.data.nodeList.find((node: node) => node.id === from);
+
+          // 检查 sourceNode 是否存在
+        if (!sourceNode) {
+          layer.msg("未找到源节点", { icon: 2 });
+          return false;
+        }     
+
+          // 检查是否是 SpecialNode 并且出线数量是否超过最大值
+        if (sourceNode.SORN === 'S' && sourceNode.maxOutcome !== undefined) {
+          if (sourceNode.outcome >= sourceNode.maxOutcome) {
+            layer.msg(`该节点最多只能有 ${sourceNode.maxOutcome} 个出线`, { icon: 2 });
+            return false;
+          }
+        }
           layer.msg("连接成功", { icon: 1 });
           return true;
         }
@@ -223,8 +283,8 @@ export const useRender = (id: string = "container") => {
    * @param mousePosition 鼠标拖拽结束的坐标
    */
   const addNode = (
-    evt: { originalEvent: { clientX: any; clientY: any } },
-    nodeMenu: { name: any; type: any; ico: any },
+    evt: { originalEvent: { clientX: any; clientY: any ;} },
+    nodeMenu: { name: any; type: any; ico: any;SORN: "S" | "N"; outcome: number; income: number; maxOutcome?: number; minOutcome?: number; },
     mousePosition: any
   ) => {
     var screenX = evt.originalEvent.clientX,
@@ -268,6 +328,9 @@ export const useRender = (id: string = "container") => {
       }
       break;
     }
+    if (nodeMenu.SORN === 'S' && nodeMenu.maxOutcome !== undefined) {
+      layer.msg(`该节点最多允许 ${nodeMenu.maxOutcome} 个出线`, { icon: 1 });
+    }
     const node = {
       id: nodeId,
       name: nodeName,
@@ -276,6 +339,11 @@ export const useRender = (id: string = "container") => {
       top: top + "px",
       ico: nodeMenu.ico,
       state: "success",
+      SORN: nodeMenu.SORN, // 初始化 SORN
+      outcome: nodeMenu.outcome, // 初始化 outcome
+      income: nodeMenu.income, // 初始化 income
+      maxOutcome: nodeMenu.maxOutcome, // 初始化 maxOutcome
+      minOutcome: nodeMenu.minOutcome, // 初始化 minOutcome
     };
     /**
      * 这里可以进行业务判断、是否能够添加该节点
@@ -346,6 +414,44 @@ export const useRender = (id: string = "container") => {
     });
   }
 
+
+
+  function validateNodes() {
+    for (const node of state.data.nodeList) {
+      // 检查孤立节点
+      if (node.outcome === 0 && node.income === 0) {
+        layer.msg(`节点 ${node.name} 是孤立的`, { icon: 2 ,offset: '30%'});
+        return false;
+      }
+  
+      // 检查 SpecialNode 的出线数量范围
+      if (node.SORN === 'S') {
+        // 明确检查 minOutcome 和 maxOutcome 是否存在
+        if (
+          node.minOutcome === undefined ||
+          node.maxOutcome === undefined
+        ) {
+          layer.msg(`节点 ${node.name} 的 minOutcome 或 maxOutcome 未配置`, { icon: 2 });
+          return false;
+        }
+  
+        // 检查出线数量是否在允许范围内
+        if (node.outcome < node.minOutcome || node.outcome > node.maxOutcome) {
+          layer.msg(`节点 ${node.name} 的出线数量不符合要求（允许范围：${node.minOutcome}-${node.maxOutcome}）`, { icon: 2 ,offset: '30%'});
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+  function saveData() {
+    if (!validateNodes()) {
+      return;
+    }
+    // 保存数据的逻辑
+    layer.msg("保存成功", { icon: 1 });
+  }
   // 删除线
   function deleteLine(from: any, to: any) {
     state.data.lineList = state.data.lineList.filter(function (line: {
@@ -422,6 +528,7 @@ export const useRender = (id: string = "container") => {
           callback: (id: any) => {
             layer.close(id);
           },
+          
         },
       ],
     });
@@ -505,5 +612,7 @@ export const useRender = (id: string = "container") => {
     downloadData,
     zoomAdd,
     zoomSub,
+    validateNodes, // 导出 validateNodes
+    saveData,      // 导出 saveData
   };
 };

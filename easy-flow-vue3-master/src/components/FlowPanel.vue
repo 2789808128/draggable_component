@@ -83,7 +83,7 @@
   </div>
       <div class="foot-button">
         <button class="retreat">取消</button>
-        <button class="save">保存</button>
+        <button class="save" @click="handleSave">保存</button>
         <button class="publish">发布</button>
       </div> 
       <div class="right-sider">
@@ -112,11 +112,13 @@ import { unref, reactive, nextTick,ref } from "vue";
 import { Codemirror } from "vue-codemirror";
 import { useRender } from "../hooks/useRender";
 import { useMockData } from "../hooks/useMockData";
+import { layer } from "@layui/layui-vue";
 
 import LeftMenu from "./LeftMenu.vue";
 import FlowNode from "./FlowNode.vue";
 import NodeConfig from "./NodeConfig.vue";
 import TimeRangePicker from "./TimeRangePicker.vue";
+
 
 
 const startTime = ref('2021-12-03 00:00:00');
@@ -180,8 +182,24 @@ const {
   downloadData,
   zoomAdd,
   zoomSub,
+  validateNodes, // 导出 validateNodes
+  saveData,      // 导出 saveData
 } = useRender();
-const { dataA } = useMockData();
+const { dataA } = useMockData();//默认展示数据data
+
+// 新增保存逻辑
+const handleSave = () => {
+  if (validateNodes()) {
+    // 验证通过，执行保存逻辑
+    layer.msg("验证通过，开始保存...", { icon: 1 });
+    // 这里可以调用实际的保存 API
+    // 例如: api.saveFlow(data).then(...)
+  } else {
+    // 验证失败，不保存
+    layer.msg("存在错误，请检查节点配置", { icon: 2 });
+  }
+};
+
 
 function configSuccess(type: string, data: any) {
   if (type === "node") {
